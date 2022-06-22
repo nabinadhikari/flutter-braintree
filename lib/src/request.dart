@@ -183,8 +183,8 @@ class BraintreePayPalRequest {
         if (displayName != null) 'displayName': displayName,
         if (billingAgreementDescription != null)
           'billingAgreementDescription': billingAgreementDescription,
-        'payPalPaymentIntent': payPalPaymentIntent.name,
-        'payPalPaymentUserAction': payPalPaymentUserAction.name,
+        'payPalPaymentIntent': PayPalPaymentIntent.authorize,
+        'payPalPaymentUserAction': PayPalPaymentUserAction.default_,
       };
 }
 

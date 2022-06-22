@@ -6,6 +6,8 @@ import 'result.dart';
 class Braintree {
   static const MethodChannel _kChannel =
       const MethodChannel('flutter_braintree.custom');
+  // static const EventChannel _eventChannel =
+  //     EventChannel('flutter_braintree.custom/events');
 
   const Braintree._();
 
@@ -39,6 +41,27 @@ class Braintree {
     BraintreePayPalRequest request,
   ) async {
     final result = await _kChannel.invokeMethod('requestPaypalNonce', {
+      'authorization': authorization,
+      'request': request.toJson(),
+    });
+    if (result == null) return null;
+    return BraintreePaymentMethodNonce.fromJson(result);
+  }
+
+  static Future<String> isGooglePayReady(
+      String authorization,
+      ) async {
+    final result = await _kChannel.invokeMethod('isGooglePayReady', {
+      'authorization': authorization,
+    });
+    return result;
+  }
+
+  static Future<BraintreePaymentMethodNonce?> googlePayPayment(
+      String authorization,
+      BraintreeGooglePaymentRequest request,
+      ) async {
+    final result = await _kChannel.invokeMethod('googlePayPayment', {
       'authorization': authorization,
       'request': request.toJson(),
     });
