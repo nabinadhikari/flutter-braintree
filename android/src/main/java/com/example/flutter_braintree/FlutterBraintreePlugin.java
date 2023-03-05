@@ -115,7 +115,6 @@ public class FlutterBraintreePlugin implements FlutterPlugin, ActivityAware, Met
       intent.putExtra("billingAgreementDescription", (String) request.get("billingAgreementDescription"));
       activity.startActivityForResult(intent, CUSTOM_ACTIVITY_REQUEST_CODE);
     } else if (call.method.equals("")) {
-           
       String authorization = call.argument("authorization");
       Intent intent = new Intent(activity, FlutterBraintreeCustom.class);
       intent.putExtra("authorization", (String) call.argument("authorization"));
@@ -136,6 +135,16 @@ public class FlutterBraintreePlugin implements FlutterPlugin, ActivityAware, Met
       Intent intent = new Intent(activity, FlutterBraintreeCustom.class);
       intent.putExtra("type", "isGooglePayReady");
       intent.putExtra("authorization", (String) call.argument("authorization"));
+      activity.startActivityForResult(intent, CUSTOM_ACTIVITY_REQUEST_CODE);
+    } else if (call.method.equals("threeDSecure")) {
+      String authorization = call.argument("authorization");
+      Intent intent = new Intent(activity, FlutterBraintreeCustom.class);
+      intent.putExtra("type", "threeDSecure");
+      intent.putExtra("authorization", (String) call.argument("authorization"));
+      assert(call.argument("request") instanceof Map);
+      Map request = (Map) call.argument("request");
+      intent.putExtra("totalPrice", (String) request.get("totalPrice"));
+      intent.putExtra("paymentNonce", (String) request.get("paymentNonce"));
       activity.startActivityForResult(intent, CUSTOM_ACTIVITY_REQUEST_CODE);
     } else if (call.method.equals("collectDeviceData")) {
       String authorization = call.argument("authorization");
